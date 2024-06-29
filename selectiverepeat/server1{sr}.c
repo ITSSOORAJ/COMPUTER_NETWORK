@@ -77,6 +77,10 @@ int main()
             }
             i++;
         }
+        if(c>f)
+        {
+            break;
+        }
     }
     close(sock);
     close(s);
