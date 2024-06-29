@@ -84,6 +84,10 @@ int main()
             c=c-wl;
             wl=W;
         }
+	     if(p>f)
+            {
+                break;
+            }
     }
     close(s);
     return 0;
