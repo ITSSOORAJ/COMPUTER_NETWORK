@@ -1,33 +1,31 @@
 #include<stdio.h>
-#include<sys/types.h>
-#include<sys/socket.h>
-#include<netinet/in.h>
-#include<netdb.h>
-#include<stdlib.h>
 #include<string.h>
+#include<stdlib.h>
 #include<unistd.h>
-#include <arpa/inet.h>
-
-#define SERV_TCP_PORT 5035
-#define MAX 60
-int main(int arg,char*argv[])
+#include<sys/socket.h>
+#include<sys/types.h>
+#include<arpa/inet.h>
+#include<netinet/in.h>
+#define port 5035
+#define max 60
+int  main()
 {
-       int sockfd,n;
-       struct sockaddr_in serv_addr;
-       struct hostent*server;
-       char send[MAX],recvline[MAX],s[MAX],name[MAX];
-       sockfd=socket(AF_INET,SOCK_STREAM,0);
-       serv_addr.sin_family=AF_INET;
-       serv_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
-       serv_addr.sin_port=htons(SERV_TCP_PORT);
-       connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
-       printf("\nEnter the source file name : \n");
-       scanf("%s",send);
-       write(sockfd,send,MAX);
-       while((n=read(sockfd,recvline,MAX))!=0)
-       {
-          printf("%s",recvline);
-       }
-       close(sockfd);
-       return 0;
+int sockfd,n;
+struct sockaddr_in servaddr, cliaddr;
+char send[max],recv[max];
+sockfd=socket(AF_INET,SOCK_STREAM,0);
+servaddr.sin_family=AF_INET;
+servaddr.sin_port=htons(port);
+servaddr.sin_addr.s_addr=inet_addr("127.0.0.1");
+connect(sockfd,(struct sockaddr*)&servaddr,sizeof(servaddr));
+printf("ENTER THE FILE NAME TO BE ACESSED FROM SERVER\n");
+scanf("%s",send);
+write(sockfd,send,max);
+while(n=(read(sockfd,recv,max))!=0)
+	{
+		printf("_______%s_______\n%s",send,recv);
+
+	}
+close(sockfd);
+return 0;
 }
